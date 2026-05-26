@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Referensi Website Puri — Warisan Leluhur</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream:  '#F5F0E8',
+            stone:  '#E8E0D0',
+            charcoal: '#2C2C2C',
+            muted:  '#7A7468',
+            gold:   '#B8A06A',
+          },
+          fontFamily: {
+            display: ['"Cormorant Garamond"', 'serif'],
+            body:    ['Jost', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * { scroll-behavior: smooth; }
+    body { font-family: 'Jost', sans-serif; background: #F5F0E8; color: #2C2C2C; }
+    h1, h2, h3, .font-display { font-family: 'Cormorant Garamond', serif; }
+
+    /* ── Section transitions ── */
+    .page-section { display: none; animation: fadeIn .45s ease; }
+    .page-section.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── Navbar active link ── */
+    .nav-link { position: relative; transition: color .3s; }
+    .nav-link::after {
+      content: ''; position: absolute; left: 0; bottom: -3px;
+      width: 0; height: 1px; background: #2C2C2C; transition: width .3s;
+    }
+    .nav-link.active::after, .nav-link:hover::after { width: 100%; }
+    .nav-link.active { color: #2C2C2C; }
+
+    /* ── Ornament divider ── */
+    .ornament { display: flex; align-items: center; gap: 12px; }
+    .ornament::before, .ornament::after { content: ''; flex: 1; height: 1px; background: #B8A06A; }
+
+    /* ── Gallery hover ── */
+    .gallery-item img { transition: transform .5s ease; }
+    .gallery-item:hover img { transform: scale(1.04); }
+
+    /* ── Parallax-like hero bg ── */
+    #hero-bg {
+      background-image: url('https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1600&q=80');
+      background-size: cover; background-position: center; background-attachment: fixed;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #F5F0E8; }
+    ::-webkit-scrollbar-thumb { background: #B8A06A; border-radius: 4px; }
+
+    /* ── Mobile menu ── */
+    #mobile-menu { transition: max-height .4s ease, opacity .4s ease; overflow: hidden; }
+    #mobile-menu.closed { max-height: 0; opacity: 0; }
+    #mobile-menu.open  { max-height: 400px; opacity: 1; }
+
+    /* ── Warisan card ── */
+    .warisan-card { transition: box-shadow .3s, transform .3s; }
+    .warisan-card:hover { box-shadow: 0 16px 40px rgba(0,0,0,.1); transform: translateY(-4px); }
+
+    /* ── Etiquette list icon ── */
+    .etq-item::before {
+      content: '⬥'; color: #B8A06A; font-size: .65rem;
+      position: absolute; left: 0; top: 4px;
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+<!-- ════════════════════ NAVBAR ════════════════════ -->
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-cream/95 backdrop-blur-sm border-b border-stone transition-shadow duration-300">
+  <div class="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
+
+    <!-- Brand -->
+    <a href="#beranda" class="nav-trigger flex items-center gap-2">
+      <span class="text-gold text-xl">✦</span>
+      <span class="font-display text-xl font-semibold tracking-wide text-charcoal">Referensi Website Puri</span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex items-center gap-8">
+      <a href="#beranda"  class="nav-link text-sm font-body font-medium tracking-widest uppercase text-muted" data-section="beranda">Beranda</a>
+      <a href="#sejarah"  class="nav-link text-sm font-body font-medium tracking-widest uppercase text-muted" data-section="sejarah">Sejarah</a>
+      <a href="#galeri"   class="nav-link text-sm font-body font-medium tracking-widest uppercase text-muted" data-section="galeri">Galeri</a>
+      <a href="#warisan"  class="nav-link text-sm font-body font-medium tracking-widest uppercase text-muted" data-section="warisan">Warisan</a>
+      <a href="#informasi" class="nav-link text-sm font-body font-medium tracking-widest uppercase text-muted" data-section="informasi">Informasi</a>
+    </nav>
+
+    <!-- Hamburger -->
+    <button id="hamburger" class="md:hidden flex flex-col gap-1.5 p-2" aria-label="Menu">
+      <span class="block w-5 h-px bg-charcoal transition-all duration-300" id="ham1"></span>
+      <span class="block w-5 h-px bg-charcoal transition-all duration-300" id="ham2"></span>
+      <span class="block w-5 h-px bg-charcoal transition-all duration-300" id="ham3"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="closed md:hidden bg-cream border-t border-stone px-6 py-0">
+    <div class="flex flex-col gap-0 py-4">
+      <a href="#beranda"   class="nav-link mob py-3 text-sm font-medium tracking-widest uppercase text-muted border-b border-stone/50" data-section="beranda">Beranda</a>
+      <a href="#sejarah"   class="nav-link mob py-3 text-sm font-medium tracking-widest uppercase text-muted border-b border-stone/50" data-section="sejarah">Sejarah</a>
+      <a href="#galeri"    class="nav-link mob py-3 text-sm font-medium tracking-widest uppercase text-muted border-b border-stone/50" data-section="galeri">Galeri</a>
+      <a href="#warisan"   class="nav-link mob py-3 text-sm font-medium tracking-widest uppercase text-muted border-b border-stone/50" data-section="warisan">Warisan</a>
+      <a href="#informasi" class="nav-link mob py-3 text-sm font-medium tracking-widest uppercase text-muted" data-section="informasi">Informasi</a>
+    </div>
+  </div>
+</header>
+
+<!-- ════════════════════ MAIN CONTENT ════════════════════ -->
+<main class="pt-16">
+
+  <!-- ─── BERANDA ─── -->
+  <section id="beranda" class="page-section">
+
+    <!-- Hero -->
+    <div id="hero-bg" class="relative min-h-[92vh] flex items-center justify-center">
+      <div class="absolute inset-0 bg-charcoal/55"></div>
+      <div class="relative z-10 text-center px-6 max-w-3xl mx-auto">
+        <p class="text-gold text-xs tracking-[.35em] uppercase mb-5 font-body">Bali · Indonesia · Sejak Abad XIV</p>
+        <h1 class="font-display text-5xl md:text-7xl text-white font-light leading-tight mb-6">
+          Referensi<br /><em>Website Puri</em>
+        </h1>
+        <p class="text-white/75 font-body font-light text-base md:text-lg leading-relaxed mb-10 max-w-xl mx-auto">
+          Pusat kebudayaan dan kediaman leluhur yang menjaga denyut seni, tradisi, dan spiritualitas Bali selama berabad-abad.
+        </p>
+        <a href="#sejarah" class="nav-trigger inline-block border border-white/70 text-white text-xs font-body font-medium tracking-[.25em] uppercase px-10 py-4 hover:bg-white hover:text-charcoal transition-all duration-300">
+          Telusuri Sejarah
+        </a>
+      </div>
+      <!-- Scroll hint -->
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+        <span class="text-white/40 text-[10px] tracking-widest uppercase font-body">Gulir</span>
+        <i class="fa-solid fa-chevron-down text-white/40 text-xs"></i>
+      </div>
+    </div>
+
+    <!-- Intro Strip -->
+    <div class="bg-white py-20 px-6">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="ornament mb-10">
+          <span class="text-gold text-lg">✦</span>
+        </div>
+        <h2 class="font-display text-3xl md:text-4xl text-charcoal font-light mb-6">
+          Istana di Jantung Pulau Dewata
+        </h2>
+        <p class="font-body font-light text-muted text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
+          Puri Agung Ubud bukan sekadar bangunan bersejarah — ia adalah nafas peradaban. Di sini, tari dan gamelan lahir, pelukis besar menemukan inspirasi, dan para raja menjalankan dharma kepemimpinan yang berpijak pada nilai-nilai Tri Hita Karana.
+        </p>
+      </div>
+    </div>
+
+    <!-- Feature Cards -->
+    <div class="bg-cream py-20 px-6">
+      <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-0 border border-stone">
+        <div class="p-10 border-b md:border-b-0 md:border-r border-stone text-center">
+          <i class="fa-regular fa-building-columns text-gold text-2xl mb-5"></i>
+          <h3 class="font-display text-xl text-charcoal mb-3">Arsitektur Agung</h3>
+          <p class="font-body font-light text-muted text-sm leading-relaxed">Gapura, bale, dan taman yang mencerminkan kosmologi Hindu-Bali dalam proporsi sempurna.</p>
+        </div>
+        <div class="p-10 border-b md:border-b-0 md:border-r border-stone text-center">
+          <i class="fa-regular fa-music text-gold text-2xl mb-5"></i>
+          <h3 class="font-display text-xl text-charcoal mb-3">Seni Hidup</h3>
+          <p class="font-body font-light text-muted text-sm leading-relaxed">Pertunjukan tari Legong, Barong, dan gamelan yang masih digelar sebagai persembahan sakral.</p>
+        </div>
+        <div class="p-10 text-center">
+          <i class="fa-regular fa-hands-praying text-gold text-2xl mb-5"></i>
+          <h3 class="font-display text-xl text-charcoal mb-3">Tradisi Lestari</h3>
+          <p class="font-body font-light text-muted text-sm leading-relaxed">Upacara adat yang tak terputus — menjaga keseimbangan alam, manusia, dan Tuhan.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ─── SEJARAH ─── -->
+  <section id="sejarah" class="page-section">
+    <div class="min-h-screen bg-white">
+
+      <!-- Page Header -->
+      <div class="bg-charcoal text-white py-24 px-6 text-center">
+        <p class="text-gold text-xs tracking-[.35em] uppercase mb-4 font-body">Kronik & Asal-Usul</p>
+        <h1 class="font-display text-4xl md:text-6xl font-light">Sejarah Puri</h1>
+      </div>
+
+      <div class="max-w-3xl mx-auto px-6 py-20">
+
+        <!-- Timeline-style narrative -->
+        <div class="space-y-16">
+          <div>
+            <div class="ornament mb-6"><span class="text-gold font-body text-xs tracking-widest">Abad XIV</span></div>
+            <h2 class="font-display text-2xl md:text-3xl text-charcoal mb-4">Kelahiran Dinasti</h2>
+            <p class="font-body font-light text-muted leading-relaxed text-[15px]">
+              Puri Agung Ubud dirintis oleh Ida Cokorda Tabanan, seorang bangsawan dari garis keturunan Kerajaan Gelgel yang bermigrasi ke kawasan hutan lebat di dataran tinggi Bali Tengah. Dengan membawa kitab-kitab Dharma dan keahlian pertanian, ia membangun permukiman yang kelak menjadi pusat kekuasaan terpenting di wilayah itu.
+            </p>
+          </div>
+
+          <div class="border-l-2 border-stone pl-8 ml-2">
+            <div class="ornament mb-6"><span class="text-gold font-body text-xs tracking-widest">Abad XVII – XVIII</span></div>
+            <h2 class="font-display text-2xl md:text-3xl text-charcoal mb-4">Zaman Keemasan</h2>
+            <p class="font-body font-light text-muted leading-relaxed text-[15px]">
+              Di bawah pemerintahan Ida Cokorda Sukawati, puri mencapai puncak kejayaan. Wilayah kekuasaan meluas, irigasi subak dikembangkan, dan seniman dari seluruh Bali diundang menetap. Puri menjadi patron seni: ukiran batu padas dipahat di setiap sudut, dan repertoire tari Legong Keraton lahir di pendopo utama.
+            </p>
+          </div>
+
+          <div class="border-l-2 border-stone pl-8 ml-2">
+            <div class="ornament mb-6"><span class="text-gold font-body text-xs tracking-widest">Abad XX</span></div>
+            <h2 class="font-display text-2xl md:text-3xl text-charcoal mb-4">Pertemuan Dua Dunia</h2>
+            <p class="font-body font-light text-muted leading-relaxed text-[15px]">
+              Kedatangan seniman Barat seperti Walter Spies dan Rudolf Bonnet membuka era dialog budaya yang luar biasa. Keluarga puri menyambut mereka, dan lahirlah gerakan seni lukis Ubud yang kini diakui dunia. Tradisi tak pernah dikompromikan — justru semakin dikokohkan melalui dokumentasi dan apresiasi internasional.
+            </p>
+          </div>
+
+          <div class="border-l-2 border-stone pl-8 ml-2">
+            <div class="ornament mb-6"><span class="text-gold font-body text-xs tracking-widest">Kini</span></div>
+            <h2 class="font-display text-2xl md:text-3xl text-charcoal mb-4">Penjaga Warisan</h2>
+            <p class="font-body font-light text-muted leading-relaxed text-[15px]">
+              Generasi ke-23 keturunan pendiri kini memimpin Puri Agung Ubud dengan semangat yang sama: melestarikan tanpa membekukan, membuka diri tanpa kehilangan jati diri. Puri tetap menjadi tempat upacara besar, pusat pendidikan seni, dan destinasi peziarah budaya dari seluruh dunia.
+            </p>
+          </div>
+        </div>
+
+        <!-- Pull quote -->
+        <div class="mt-20 border border-gold/40 p-10 text-center bg-cream rounded-sm">
+          <p class="font-display text-xl md:text-2xl text-charcoal italic leading-relaxed">
+            "Puri bukan hanya rumah bagi bangsawan —<br />ia adalah rumah bagi seluruh kebudayaan Bali."
+          </p>
+          <p class="mt-4 font-body font-light text-muted text-xs tracking-widest uppercase">— Ida Cokorda Mahendra, 1972</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── GALERI ─── -->
+  <section id="galeri" class="page-section">
+    <div class="min-h-screen bg-cream">
+      <!-- Page Header -->
+      <div class="bg-charcoal text-white py-24 px-6 text-center">
+        <p class="text-gold text-xs tracking-[.35em] uppercase mb-4 font-body">Dokumentasi Visual</p>
+        <h1 class="font-display text-4xl md:text-6xl font-light">Galeri</h1>
+      </div>
+
+      <div class="max-w-6xl mx-auto px-6 py-16">
+        <p class="text-center font-body font-light text-muted text-sm mb-12 tracking-wide">Sebuah jendela menuju keindahan arsitektur, ritual, dan kehidupan di dalam Puri Agung Ubud.</p>
+
+        <!-- Masonry-style Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+
+          <!-- Large item -->
+          <div class="gallery-item col-span-2 md:col-span-1 md:row-span-2 overflow-hidden rounded-sm">
+            <img src="https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=800&q=80" alt="Gapura Puri" class="w-full h-full object-cover min-h-[280px]" loading="lazy" />
+          </div>
+
+          <div class="gallery-item overflow-hidden rounded-sm">
+            <img src="https://images.unsplash.com/photo-1604935067269-27c4f7a86a11?w=600&q=80" alt="Tari Bali" class="w-full h-56 md:h-full object-cover" loading="lazy" />
+          </div>
+
+          <div class="gallery-item overflow-hidden rounded-sm">
+            <img src="https://images.unsplash.com/photo-1548590149-a5ab1a48ff69?w=600&q=80" alt="Upacara" class="w-full h-56 md:h-full object-cover" loading="lazy" />
+          </div>
+
+          <div class="gallery-item overflow-hidden rounded-sm">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Gamelan" class="w-full h-48 object-cover" loading="lazy" />
+          </div>
+
+          <div class="gallery-item overflow-hidden rounded-sm">
+            <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=600&q=80" alt="Ukiran Bali" class="w-full h-48 object-cover" loading="lazy" />
+          </div>
+
+          <div class="gallery-item overflow-hidden rounded-sm">
+            <img src="https://images.unsplash.com/photo-1596401057633-54a8b8bd4236?w=600&q=80" alt="Sesaji" class="w-full h-48 object-cover" loading="lazy" />
+          </div>
+
+          <div class="gallery-item col-span-2 overflow-hidden rounded-sm">
+            <img src="https://images.unsplash.com/photo-1534271057238-c2c170a76672?w=1200&q=80" alt="Panorama Ubud" class="w-full h-56 object-cover" loading="lazy" />
+          </div>
+
+          <div class="gallery-item overflow-hidden rounded-sm">
+            <img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=600&q=80" alt="Sawah Bali" class="w-full h-56 object-cover" loading="lazy" />
+          </div>
+
+          <div class="gallery-item overflow-hidden rounded-sm">
+            <img src="https://images.unsplash.com/photo-1574101175107-c46b4d0fd5b0?w=600&q=80" alt="Canang Sari" class="w-full h-48 object-cover" loading="lazy" />
+          </div>
+
+          <div class="gallery-item overflow-hidden rounded-sm">
+            <img src="https://images.unsplash.com/photo-1615460549969-36fa19521a4f?w=600&q=80" alt="Barong" class="w-full h-48 object-cover" loading="lazy" />
+          </div>
+
+          <div class="gallery-item col-span-2 md:col-span-1 overflow-hidden rounded-sm">
+            <img src="https://images.unsplash.com/photo-1622374728-ab43cfd67eb2?w=600&q=80" alt="Pura Tirta" class="w-full h-48 object-cover" loading="lazy" />
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── WARISAN ─── -->
+  <section id="warisan" class="page-section">
+    <div class="min-h-screen bg-white">
+      <!-- Page Header -->
+      <div class="bg-charcoal text-white py-24 px-6 text-center">
+        <p class="text-gold text-xs tracking-[.35em] uppercase mb-4 font-body">Peninggalan & Tradisi</p>
+        <h1 class="font-display text-4xl md:text-6xl font-light">Warisan Budaya</h1>
+      </div>
+
+      <div class="max-w-5xl mx-auto px-6 py-20">
+        <p class="text-center font-body font-light text-muted text-base leading-relaxed max-w-2xl mx-auto mb-16">
+          Puri Agung Ubud adalah penjaga hidup dari berbagai warisan seni, ritual, dan tradisi yang telah merentang selama berabad-abad — bukan sebagai museum, melainkan sebagai kehidupan yang terus berdenyut.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <div class="warisan-card bg-cream border border-stone p-8 rounded-sm">
+            <div class="flex items-start gap-5">
+              <div class="w-12 h-12 flex-shrink-0 bg-charcoal flex items-center justify-center rounded-sm">
+                <i class="fa-solid fa-masks-theater text-gold text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-display text-xl text-charcoal mb-2">Tari Legong Keraton</h3>
+                <p class="font-body font-light text-muted text-sm leading-relaxed">Tarian istana yang lahir di pendopo Puri, kini menjadi salah satu ekspresi seni tari Bali paling dikenal di dunia. Setiap gerakan jari dan tatapan mata memuat narasi epik Ramayana dan Mahabharata.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="warisan-card bg-cream border border-stone p-8 rounded-sm">
+            <div class="flex items-start gap-5">
+              <div class="w-12 h-12 flex-shrink-0 bg-charcoal flex items-center justify-center rounded-sm">
+                <i class="fa-solid fa-drum text-gold text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-display text-xl text-charcoal mb-2">Gamelan Semar Pagulingan</h3>
+                <p class="font-body font-light text-muted text-sm leading-relaxed">Orkestra gamelan langka yang hanya dimainkan di dalam lingkungan puri. Instrumennya terbuat dari perunggu pilihan dan dipercaya memiliki kekuatan spiritual yang menjaga keseimbangan Puri.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="warisan-card bg-cream border border-stone p-8 rounded-sm">
+            <div class="flex items-start gap-5">
+              <div class="w-12 h-12 flex-shrink-0 bg-charcoal flex items-center justify-center rounded-sm">
+                <i class="fa-solid fa-paint-brush text-gold text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-display text-xl text-charcoal mb-2">Lukisan Gaya Ubud</h3>
+                <p class="font-body font-light text-muted text-sm leading-relaxed">Gerakan seni lukis modern Bali yang berakar di Puri. Para maestro seperti I Gusti Nyoman Lempad menghabiskan hidup mereka melukis di bawah naungan keluarga puri dengan gaya yang khas dan tak tertandingi.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="warisan-card bg-cream border border-stone p-8 rounded-sm">
+            <div class="flex items-start gap-5">
+              <div class="w-12 h-12 flex-shrink-0 bg-charcoal flex items-center justify-center rounded-sm">
+                <i class="fa-solid fa-scroll text-gold text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-display text-xl text-charcoal mb-2">Lontar & Pustaka Suci</h3>
+                <p class="font-body font-light text-muted text-sm leading-relaxed">Koleksi naskah lontar kuno yang menyimpan pengetahuan tentang astronomi Bali, sistem kalender, ilmu pengobatan tradisional, dan aturan tata cara upacara yang dijaga ketat oleh para pandita puri.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="warisan-card bg-cream border border-stone p-8 rounded-sm">
+            <div class="flex items-start gap-5">
+              <div class="w-12 h-12 flex-shrink-0 bg-charcoal flex items-center justify-center rounded-sm">
+                <i class="fa-solid fa-water text-gold text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-display text-xl text-charcoal mb-2">Sistem Subak</h3>
+                <p class="font-body font-light text-muted text-sm leading-relaxed">Puri adalah pengatur utama sistem irigasi subak — warisan UNESCO — yang mengalirkan air ke ribuan hektar sawah terasering. Keputusan pengelolaan air hingga kini masih dimusyawarahkan di pendopo puri.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="warisan-card bg-cream border border-stone p-8 rounded-sm">
+            <div class="flex items-start gap-5">
+              <div class="w-12 h-12 flex-shrink-0 bg-charcoal flex items-center justify-center rounded-sm">
+                <i class="fa-solid fa-hands-praying text-gold text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-display text-xl text-charcoal mb-2">Upacara Panca Yadnya</h3>
+                <p class="font-body font-light text-muted text-sm leading-relaxed">Lima jenis upacara suci yang dijalankan secara rutin di pura-pura dalam kompleks puri. Setiap upacara melibatkan ratusan anggota masyarakat dan berlangsung selama beberapa hari penuh khidmat.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── INFORMASI ─── -->
+  <section id="informasi" class="page-section">
+    <div class="min-h-screen bg-cream">
+      <!-- Page Header -->
+      <div class="bg-charcoal text-white py-24 px-6 text-center">
+        <p class="text-gold text-xs tracking-[.35em] uppercase mb-4 font-body">Panduan Kunjungan</p>
+        <h1 class="font-display text-4xl md:text-6xl font-light">Informasi</h1>
+      </div>
+
+      <div class="max-w-5xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-2 gap-12">
+
+        <!-- Lokasi & Jam -->
+        <div>
+          <div class="ornament mb-6"><span class="text-gold font-body text-xs tracking-widest">Lokasi</span></div>
+          <h2 class="font-display text-2xl text-charcoal mb-4">Cara Menuju Puri</h2>
+          <p class="font-body font-light text-muted text-sm leading-relaxed mb-6">
+            Puri Agung Ubud terletak di jantung kota Ubud, tepat di persimpangan Jalan Raya Ubud dan Jalan Suweta — mudah dijangkau dari segala penjuru Bali.
+          </p>
+
+          <!-- Address card -->
+          <div class="bg-white border border-stone p-5 rounded-sm mb-6 flex gap-4 items-start">
+            <i class="fa-solid fa-location-dot text-gold mt-1"></i>
+            <div>
+              <p class="font-body font-medium text-charcoal text-sm">Jalan Raya Ubud No. 1</p>
+              <p class="font-body font-light text-muted text-sm">Ubud, Gianyar, Bali 80571</p>
+              <p class="font-body font-light text-muted text-sm">Indonesia</p>
+            </div>
+          </div>
+
+          <!-- Map Placeholder -->
+          <div class="bg-stone border border-stone rounded-sm overflow-hidden h-52 flex items-center justify-center relative">
+            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618613448153-985c2ad08647?w=800&q=60')] bg-cover bg-center opacity-20"></div>
+            <div class="relative text-center z-10">
+              <i class="fa-solid fa-map text-muted text-4xl mb-3 opacity-50"></i>
+              <p class="font-body text-muted text-xs tracking-widest uppercase">Peta Interaktif</p>
+              <a href="https://maps.google.com/?q=Puri+Agung+Ubud" target="_blank" rel="noopener"
+                 class="mt-3 inline-block text-xs font-body font-medium tracking-wider text-charcoal border border-charcoal px-4 py-2 hover:bg-charcoal hover:text-cream transition-colors">
+                Buka di Google Maps
+              </a>
+            </div>
+          </div>
+
+          <!-- Jam & Harga -->
+          <div class="mt-6 grid grid-cols-2 gap-3">
+            <div class="bg-white border border-stone p-4 rounded-sm">
+              <i class="fa-regular fa-clock text-gold text-sm mb-2"></i>
+              <p class="font-body font-medium text-charcoal text-xs uppercase tracking-widest mb-1">Jam Buka</p>
+              <p class="font-body font-light text-muted text-sm">Setiap hari</p>
+              <p class="font-body text-charcoal text-sm font-medium">08.00 – 18.00</p>
+            </div>
+            <div class="bg-white border border-stone p-4 rounded-sm">
+              <i class="fa-solid fa-ticket text-gold text-sm mb-2"></i>
+              <p class="font-body font-medium text-charcoal text-xs uppercase tracking-widest mb-1">Tiket</p>
+              <p class="font-body font-light text-muted text-sm">Wisatawan Umum</p>
+              <p class="font-body text-charcoal text-sm font-medium">Rp 50.000</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tata Krama -->
+        <div>
+          <div class="ornament mb-6"><span class="text-gold font-body text-xs tracking-widest">Etika Kunjungan</span></div>
+          <h2 class="font-display text-2xl text-charcoal mb-4">Tata Krama Puri</h2>
+          <p class="font-body font-light text-muted text-sm leading-relaxed mb-8">
+            Puri adalah tempat suci yang masih aktif digunakan untuk upacara keagamaan. Mohon hormati aturan berikut selama kunjungan Anda:
+          </p>
+
+          <ul class="space-y-4">
+            <li class="relative pl-5 font-body font-light text-muted text-sm leading-relaxed etq-item">
+              <strong class="text-charcoal font-medium">Berpakaian Sopan.</strong> Kenakan kain/sarung dan selendang yang disediakan di pintu masuk. Pakaian terbuka atau pendek tidak diizinkan memasuki area utama.
+            </li>
+            <li class="relative pl-5 font-body font-light text-muted text-sm leading-relaxed etq-item">
+              <strong class="text-charcoal font-medium">Hormati Ruang Sakral.</strong> Beberapa bagian puri hanya terbuka untuk keluarga kerajaan dan pemangku. Patuhi tanda larangan masuk dan jangan melewati batas yang ditetapkan.
+            </li>
+            <li class="relative pl-5 font-body font-light text-muted text-sm leading-relaxed etq-item">
+              <strong class="text-charcoal font-medium">Jaga Keheningan.</strong> Berbicara dengan suara tenang, terutama saat ada upacara berlangsung. Matikan nada dering ponsel di area persembahyangan.
+            </li>
+            <li class="relative pl-5 font-body font-light text-muted text-sm leading-relaxed etq-item">
+              <strong class="text-charcoal font-medium">Wanita Haid.</strong> Wanita yang sedang menstruasi tidak diperkenankan memasuki area pura dalam puri, sebagaimana adat Bali yang berlaku.
+            </li>
+            <li class="relative pl-5 font-body font-light text-muted text-sm leading-relaxed etq-item">
+              <strong class="text-charcoal font-medium">Fotografi.</strong> Diperbolehkan di area umum. Minta izin sebelum memotret anggota keluarga puri, pemangku, atau prosesi upacara yang berlangsung.
+            </li>
+            <li class="relative pl-5 font-body font-light text-muted text-sm leading-relaxed etq-item">
+              <strong class="text-charcoal font-medium">Jangan Menyentuh Sesaji.</strong> Canang dan banten (sesaji) adalah persembahan suci. Jangan menyentuh, menggeser, atau melewati sesaji yang ada di tanah.
+            </li>
+            <li class="relative pl-5 font-body font-light text-muted text-sm leading-relaxed etq-item">
+              <strong class="text-charcoal font-medium">Tidak Merokok & Minum Alkohol.</strong> Dilarang keras di seluruh kawasan puri.
+            </li>
+          </ul>
+
+          <div class="mt-8 bg-charcoal text-white p-6 rounded-sm">
+            <p class="font-display text-lg italic leading-relaxed">
+              "Datanglah dengan hati yang bersih, pulanglah dengan jiwa yang lebih kaya."
+            </p>
+            <p class="mt-2 font-body font-light text-white/50 text-xs tracking-widest uppercase">— Pesan Puri untuk Para Tamu</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer class="bg-charcoal text-white">
+  <div class="max-w-5xl mx-auto px-6 py-16 text-center">
+    <span class="text-gold text-2xl mb-4 block">✦</span>
+    <h2 class="font-display text-2xl md:text-3xl font-light mb-2">Referensi Website Puri</h2>
+    <p class="font-body font-light text-white/40 text-xs tracking-widest uppercase mb-10">Ubud, Bali · Indonesia</p>
+
+    <!-- Social Icons -->
+    <div class="flex items-center justify-center gap-6 mb-10">
+      <a href="https://instagram.com/puriagungubud" target="_blank" rel="noopener"
+         class="w-10 h-10 border border-white/20 flex items-center justify-center rounded-sm hover:border-gold hover:text-gold transition-colors duration-300" aria-label="Instagram">
+        <i class="fa-brands fa-instagram text-sm"></i>
+      </a>
+      <a href="https://youtube.com/@puriagungubud" target="_blank" rel="noopener"
+         class="w-10 h-10 border border-white/20 flex items-center justify-center rounded-sm hover:border-gold hover:text-gold transition-colors duration-300" aria-label="YouTube">
+        <i class="fa-brands fa-youtube text-sm"></i>
+      </a>
+      <a href="https://facebook.com/puriagungubud" target="_blank" rel="noopener"
+         class="w-10 h-10 border border-white/20 flex items-center justify-center rounded-sm hover:border-gold hover:text-gold transition-colors duration-300" aria-label="Facebook">
+        <i class="fa-brands fa-facebook-f text-sm"></i>
+      </a>
+    </div>
+
+    <!-- Footer Nav -->
+    <nav class="flex flex-wrap items-center justify-center gap-6 mb-10">
+      <a href="#beranda"   class="nav-trigger text-white/40 hover:text-white text-xs tracking-widest uppercase transition-colors font-body">Beranda</a>
+      <span class="text-white/20 text-xs">·</span>
+      <a href="#sejarah"   class="nav-trigger text-white/40 hover:text-white text-xs tracking-widest uppercase transition-colors font-body">Sejarah</a>
+      <span class="text-white/20 text-xs">·</span>
+      <a href="#galeri"    class="nav-trigger text-white/40 hover:text-white text-xs tracking-widest uppercase transition-colors font-body">Galeri</a>
+      <span class="text-white/20 text-xs">·</span>
+      <a href="#warisan"   class="nav-trigger text-white/40 hover:text-white text-xs tracking-widest uppercase transition-colors font-body">Warisan</a>
+      <span class="text-white/20 text-xs">·</span>
+      <a href="#informasi" class="nav-trigger text-white/40 hover:text-white text-xs tracking-widest uppercase transition-colors font-body">Informasi</a>
+    </nav>
+
+    <p class="font-body font-light text-white/25 text-xs">
+      © 2025 Referensi Website Puri. Seluruh hak cipta dilindungi.
+    </p>
+  </div>
+</footer>
+
+<!-- ════════════════════ JAVASCRIPT ════════════════════ -->
+<script>
+  // ── Sections & nav links ──
+  const sections  = document.querySelectorAll('.page-section');
+  const navLinks  = document.querySelectorAll('.nav-link');
+  const VALID     = ['beranda', 'sejarah', 'galeri', 'warisan', 'informasi'];
+
+  function getHash() {
+    const h = (window.location.hash || '#beranda').replace('#', '');
+    return VALID.includes(h) ? h : 'beranda';
+  }
+
+  function showSection(id) {
+    sections.forEach(s => s.classList.remove('active'));
+    navLinks.forEach(l => l.classList.remove('active'));
+
+    const target = document.getElementById(id);
+    if (target) target.classList.add('active');
+
+    navLinks.forEach(l => {
+      if (l.dataset.section === id) l.classList.add('active');
+    });
+
+    // scroll to top of content
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Hash router ──
+  function router() { showSection(getHash()); }
+
+  window.addEventListener('hashchange', router);
+  window.addEventListener('DOMContentLoaded', router);
+
+  // ── Nav-trigger links (CTA buttons, footer links, brand) ──
+  document.querySelectorAll('a.nav-trigger, a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const hash = (link.getAttribute('href') || '').replace('#', '');
+      if (VALID.includes(hash)) {
+        e.preventDefault();
+        history.pushState(null, '', '#' + hash);
+        showSection(hash);
+        // Close mobile menu
+        mobileMenu.classList.replace('open', 'closed');
+        menuOpen = false;
+      }
+    });
+  });
+
+  // ── Hamburger menu ──
+  const hamburger  = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const ham1 = document.getElementById('ham1');
+  const ham2 = document.getElementById('ham2');
+  const ham3 = document.getElementById('ham3');
+  let menuOpen = false;
+
+  hamburger.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    mobileMenu.classList.toggle('open',   menuOpen);
+    mobileMenu.classList.toggle('closed', !menuOpen);
+
+    // Animate to X
+    if (menuOpen) {
+      ham1.style.transform = 'translateY(6px) rotate(45deg)';
+      ham3.style.transform = 'translateY(-6px) rotate(-45deg)';
+      ham2.style.opacity   = '0';
+    } else {
+      ham1.style.transform = '';
+      ham3.style.transform = '';
+      ham2.style.opacity   = '1';
+    }
+  });
+
+  // ── Navbar shadow on scroll ──
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('shadow-md', window.scrollY > 10);
+  });
+</script>
+</body>
+</html>
